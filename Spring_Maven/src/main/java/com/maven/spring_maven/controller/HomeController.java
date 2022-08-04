@@ -1,6 +1,7 @@
 package com.maven.spring_maven.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
