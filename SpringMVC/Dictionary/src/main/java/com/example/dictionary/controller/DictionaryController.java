@@ -15,17 +15,22 @@ public class DictionaryController {
     @PostMapping("/result")
     public String result(@RequestParam String word, Model model){
         String result = null;
-        if (word.toLowerCase ().trim ().equals ( "hello" )){
-            result = "Xin chao";
-        }
-        if (word.toLowerCase ().trim ().equals ( "yes" )){
-            result = "Co";
-        }
-        if (word.toLowerCase ().trim ().equals ( "no" )){
-            result = "Khong";
-        }
-        if (word.toLowerCase ().trim ().equals ( "bye" )){
-            result = "Tam biet";
+        switch (word.toLowerCase ().trim ()) {
+            case "hello":
+                result = "Xin chao";
+                break;
+            case "yes":
+                result = "Co";
+                break;
+            case "no":
+                result = "Khong";
+                break;
+            case "bye":
+                result = "Tam biet";
+                break;
+            default:
+                result = "Khong tim thay";
+                break;
         }
         model.addAttribute("result",result);
         return  "result";

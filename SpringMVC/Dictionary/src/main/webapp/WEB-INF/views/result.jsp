@@ -11,7 +11,6 @@
     <title>Result</title>
 </head>
 <body>
-<h1>Vienamese: </h1>
 <h1>${requestScope.result}</h1>
 </body>
 </html>
