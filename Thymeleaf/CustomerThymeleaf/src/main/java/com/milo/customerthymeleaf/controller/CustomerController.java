@@ -5,10 +5,7 @@ import com.milo.customerthymeleaf.service.CustomerService;
 import com.milo.customerthymeleaf.service.ICustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -35,9 +32,10 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public String save(Customer customer) {
+    public String save(@ModelAttribute("customer") Customer customer, RedirectAttributes redirect) {
         customer.setId((int) (Math.random() * 10000));
         customerService.save(customer);
+        redirect.addFlashAttribute("success", "Create customer successfully!");
         return "redirect:/customer";
     }
 
