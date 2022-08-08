@@ -9,6 +9,11 @@ import java.util.List;
 public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
+// stored procedure
+    @Override
+    public boolean insertWithStoredProcedure(Customer customer) {
+        return customerRepository.insertWithStoredProcedure(customer);
+    }
 
     @Override
     public List<Customer> findAll() {

@@ -18,6 +18,8 @@ public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
+
+
     @GetMapping("/customers")
     public ModelAndView listCustomers() {
         List<Customer> customers = customerService.findAll();
@@ -36,6 +38,22 @@ public class CustomerController {
     @PostMapping("/create-customer")
     public ModelAndView saveCustomer(@ModelAttribute("customer") Customer customer) {
         customerService.save(customer);
+        ModelAndView modelAndView = new ModelAndView("/customer/create");
+        modelAndView.addObject("customer", new Customer());
+        modelAndView.addObject("message", "New customer created successfully");
+        return modelAndView;
+    }
+
+    // su dung stored procedure
+    @GetMapping("/create-customer-procedure")
+    public ModelAndView showCreateFormProcedure() {
+        ModelAndView modelAndView = new ModelAndView("/customer/create");
+        modelAndView.addObject("customer", new Customer ());
+        return modelAndView;
+    }
+    @PostMapping("/create-customer-procedure")
+    public ModelAndView saveCustomerProcedure(@ModelAttribute("customer") Customer customer) {
+        customerService.insertWithStoredProcedure(customer);
         ModelAndView modelAndView = new ModelAndView("/customer/create");
         modelAndView.addObject("customer", new Customer());
         modelAndView.addObject("message", "New customer created successfully");
