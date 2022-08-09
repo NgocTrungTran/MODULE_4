@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <a href="/create-customer">Create new customer</a>
+    <h1>Customers</h1>
+    <table class="table table-hover">
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Province</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <th:block th:each="customer : ${customers}">
+            <tr>
+                <td th:text="${customer.firstName}"></td>
+                <td th:text="${customer.lastName}"></td>
+                <td th:if="${customer.province}" th:text="${customer.province.name}"></td>
+                <td th:unless="${customer.province}"></td>
+                <td class="bg-warning bg"><a th:href="@{/edit-customer/__${customer.id}__ }">Edit</a></td>
+                <td class="bg-danger"><a th:href="@{/delete-customer/__${customer.id}__ }">Delete</a></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+</body>
+</html>
