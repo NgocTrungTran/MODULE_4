@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Transfer</title>
+    <link rel="shortcut icon" href="https://vanphongxanh.vn/wp-content/uploads/2022/03/logo-social.png">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/node_modules/fontawesome-4.7/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        .container>.table-title>.row>.col-sm-6 {
+            padding-top: 25px;
+        }
+
+        .table thead {
+            background-color: blue;
+            color: white;
+        }
+
+        .container>.table-title>.row>.col-sm-6:nth-child(2) {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="table-title mb-4">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>Transfer</h1>
+                </div>
+                <div class="col-sm-6">
+                    <a href="/customers/list" class="btn btn-outline-light"><i class="fa fa-list" aria-hidden="true"></i> <span>Customer list</span></a>
+                </div>
+            </div>
+        </div>
+        <form id="frmTransfer" method="post" novalidate="novalidate" th:action="@{/transfers/add}" th:object="${sender}">
+            <fieldset class="row g-3">
+                <div class="form-group row">
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Sender ID</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" readonly="" th:field="*{id}">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Sender Name</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control valid" readonly="" th:field="*{full_name}">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Email</label>
+                        <div class="col-sm-12">
+                            <input type="email" class="form-control" readonly="" th:field="*{email}">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Sender balance</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control num-space" readonly="" th:field="*{balance}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-4">
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Recipient ID</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control valid" id="recipient_id" name="recipient_id">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Transfer Amount ($)</label>
+                        <div class="col-sm-12">
+                            <input type="text" id="transferAmount" class="form-control" name="transferAmount"
+                            onchange="myFunction()">
+                            <script>
+                                function myFunction() {
+                                    var x = document.getElementById("transferAmount").value.trim();
+                                    console.log(x);
+                                    document.getElementById("transactionAmount").value = x * 10 / 100;
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Fees (%)</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" value="10" readonly="">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Total amount of transaction ($)</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control num-space" readonly="" id="transactionAmount"
+                                name="transactionAmount">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="mb-3 col-md-12">
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="fa fa-exchange" aria-hidden="true"></i>
+                                Transfer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="alert" style="position: fixed; bottom: 0">
+        <th:block th:if="${message}">
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <span th:text="${message}"></span>
+            </div>
+        </th:block>
+        <th:block th:if="${error}">
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
+                <span th:text="${error}"></span>
+            </div>
+        </th:block>
+    </div>
+</body>
+</html>
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>

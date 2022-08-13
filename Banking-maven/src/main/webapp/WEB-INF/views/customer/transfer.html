@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Transfer</title>
+    <th:block th:replace="/layout/head :: head"/>
+    <style>
+        .container>.table-title>.row>.col-sm-6 {
+            padding-top: 25px;
+        }
+
+        .table thead {
+            background-color: blue;
+            color: white;
+        }
+
+        .container>.table-title>.row>.col-sm-6:nth-child(2) {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="table-title mb-4">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>Transfer</h1>
+                </div>
+                <div class="col-sm-6">
+                    <a href="/customers" class="btn btn-outline-light"><i class="fa fa-list" aria-hidden="true"></i> <span>Customer list</span></a>
+                </div>
+            </div>
+        </div>
+        <form id="frmTransfer" method="post" novalidate="novalidate" th:object="${sender}">
+            <fieldset class="row g-3">
+                <div class="form-group row">
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Sender ID</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" readonly="" th:field="*{id}">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Sender Name</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control valid" readonly="" th:field="*{fullName}">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Email</label>
+                        <div class="col-sm-12">
+                            <input type="email" class="form-control" readonly="" th:field="*{email}">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Sender balance</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control num-space" readonly="" th:field="*{balance}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-4" th:object="${transfer}">
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Recipient ID</label>
+                        <div class="col-sm-12">
+                            <select th:field="*{recipient}" class="form-select">
+                                <th:block th:each="recipient : ${recipients}">
+                                    <option th:value="${recipient.id}" th:text="${'(' + recipient.id + ') ' + '- ' + recipient.fullName}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Transfer Amount ($)</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" th:field="*{transferAmount}">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Fees (%)</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" value="10" readonly="">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label class="col-sm-12 col-form-label">Total amount of transaction ($)</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control num-space" readonly="" th:field="*{transactionAmount}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="mb-3 col-md-12">
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="fa fa-exchange" aria-hidden="true"></i>
+                                Transfer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="alert" style="position: fixed; bottom: 0">
+        <th:block th:if="${message}">
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <span th:text="${message}"></span>
+            </div>
+        </th:block>
+        <th:block th:if="${error}">
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
+                <span th:text="${error}"></span>
+            </div>
+        </th:block>
+    </div>
+</body>
+<th:block th:replace="/layout/script :: script"/>
+<script>
+    $("#transferAmount").on("input", function () {
+        let transferAmount = +$(this).val();
+        let fees = 10;
+        let feesAmount = transferAmount * fees / 100;
+        let transactionAmount = transferAmount + feesAmount;
+
+        $("#transactionAmount").val(transactionAmount);
+    });
+</script>
+</html>

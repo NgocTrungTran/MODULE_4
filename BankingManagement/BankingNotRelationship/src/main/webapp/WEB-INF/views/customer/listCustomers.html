@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Customer</title>
+    <link rel="shortcut icon" href="https://vanphongxanh.vn/wp-content/uploads/2022/03/logo-social.png">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/node_modules/fontawesome-4.7/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-5">
+                <h1>List of customers</h1>
+            </div>
+            <div class="col-sm-7">
+                <a href="/customers/create" class="btn btn-outline-light"><i class="fa fa-plus-square-o"
+                                                                               aria-hidden="true"></i> <span>Add New Customer</span></a>
+                <a href="transferInfo.html" class="btn btn-outline-light"><i class="fa fa-history"
+                                                                             aria-hidden="true"></i>
+                    <span>Transfer money Information</span></a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Fullname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Balance</th>
+            <th colspan="5">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="customer : ${customers}">
+            <tr>
+                <td th:text="${customer.getId()}"></td>
+                <td th:text="${customer.getFull_name()}"></td>
+                <td th:text="${customer.getEmail()}"></td>
+                <td class="text-center" th:text="${customer.getPhone()}"></td>
+                <td th:text="${customer.getAddress()}"></td>
+                <td class="text-end num-space" th:text="${customer.getBalance()}"></td>
+                <td class="text-center">
+                    <a class="btn btn-outline-secondary" title="" data-toggle="tooltip" th:href="@{/customers/edit/__${customer.getId()}__}"
+                       data-bs-original-title="Edit">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-outline-success" title="" data-toggle="tooltip" th:href="@{/deposits/add/__${customer.getId()}__}"
+                       data-bs-original-title="Deposit">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-outline-warning" title="" data-toggle="tooltip" th:href="@{/withdraws/add/__${customer.getId()}__}"
+                       data-bs-original-title="Withdraw">
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-outline-primary" title="" data-toggle="tooltip" th:href="@{/transfers/add/__${customer.getId()}__}"
+                       data-bs-original-title="Transfer">
+                        <i class="fa fa-exchange" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-outline-danger" title="" data-toggle="tooltip" th:href="@{/customers/suspended/__${customer.getId()}__}"
+                       data-bs-original-title="Suspended">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+    <div class="alert" style="position: fixed; bottom: 0">
+        <th:block th:if="${message}">
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <span th:text="${message}"></span>
+            </div>
+        </th:block>
+        <th:block th:if="${error}">
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
+                <span th:text="${error}"></span>
+            </div>
+        </th:block>
+    </div>
+</div>
+</body>
+
+</html>
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>

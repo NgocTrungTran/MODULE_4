@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "fontawesome-4.7": "^4.7.0",
+    "sweetalert2": "^11.4.26"
+  }
+}
