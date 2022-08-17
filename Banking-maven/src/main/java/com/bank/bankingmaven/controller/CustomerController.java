@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -166,16 +168,20 @@ public class CustomerController {
         BigDecimal newBalance = currentBalance.subtract ( transactionAmount );
         if ( transactionAmount.compareTo ( currentBalance ) > 0 ) {
             modelAndView.addObject ( "error", "Số dư tài khoản không đủ thực hiện giao dịch" );
+            Customer newCustomer = customerService.save ( customer );
+            modelAndView.addObject ( "customer", newCustomer );
+            modelAndView.addObject ( "withdraw", new Withdraw () );
+            return modelAndView;
         } else {
             withdraw.setCustomer ( customer );
             customer.setBalance ( newBalance );
             withdrawService.save ( withdraw );
+            Customer newCustomer = customerService.save ( customer );
+            modelAndView.addObject ( "customer", newCustomer );
+            modelAndView.addObject ( "withdraw", new Withdraw () );
+            modelAndView.addObject ( "message", "Withdraw successfully" );
+            return modelAndView;
         }
-        Customer newCustomer = customerService.save ( customer );
-        modelAndView.addObject ( "customer", newCustomer );
-        modelAndView.addObject ( "withdraw", new Withdraw () );
-        modelAndView.addObject ( "message", "Withdraw successfully" );
-        return modelAndView;
     }
 
     @GetMapping("/transfer/{senderId}")
