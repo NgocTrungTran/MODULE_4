@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ajax-banking-maven-locationregion:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>ajax-banking-maven-locationregion</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="spring-ajax-banking-transaction-location-region.war">
+      <element id="artifact" artifact-name="ajax-banking-maven-locationregion:war exploded" />
+    </root>
+  </artifact>
+</component>
